@@ -41,4 +41,39 @@
         <div class="page" style="background-image: url('Image2.jpg');"></div>
         <div class="page" style="background-image: url('Image3.jpg');"></div>
         <div class="page" style="background-image: url('Image4.jpg');"></div>
-        <div class="page" style="background-image: url('Image5.jpg');"></div
+        <div class="page" style="background-image: url('Image5.jpg');"></div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Ensure turn.js is available
+            if (typeof $.fn.turn !== "undefined") {
+                $("#flipbook").turn({
+                    width: 800,
+                    height: 600,
+                    autoCenter: true,
+                    display: "double"
+                });
+
+                $("#prev").click(function() {
+                    $("#flipbook").turn("previous");
+                });
+
+                $("#next").click(function() {
+                    $("#flipbook").turn("next");
+                });
+
+            } else {
+                console.error("Turn.js is not loaded properly.");
+            }
+        });
+    </script>
+
+</body>
+</html>
