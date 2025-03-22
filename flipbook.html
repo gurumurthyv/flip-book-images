@@ -27,7 +27,6 @@
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            position: relative;
         }
         .page {
             width: 100%;
@@ -37,77 +36,56 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            position: relative;
-            transition: transform 0.3s ease-out;
         }
         .page img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
-
-        /* Hover effect for lifting pages on bottom left or right */
-        .page:hover .hover-left, .page:hover .hover-right {
-            transform: scaleY(1.2);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Left Hover Zone */
-        .hover-left {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50%;
-            height: 50px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        /* Right Hover Zone */
-        .hover-right {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 50%;
-            height: 50px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
     </style>
 </head>
 <body>
 
     <!-- Flipbook Container -->
     <div id="flipbook">
-        <!-- Add your images here (assuming images are in the same folder as the HTML) -->
-        <div class="page">
-            <div class="hover-left"></div>
-            <div class="hover-right"></div>
-            <img src="Image1.jpg" alt="Image 1">
-        </div>
-        <div class="page">
-            <div class="hover-left"></div>
-            <div class="hover-right"></div>
-            <img src="Image2.jpg" alt="Image 2">
-        </div>
-        <div class="page">
-            <div class="hover-left"></div>
-            <div class="hover-right"></div>
-            <img src="Image3.jpg" alt="Image 3">
-        </div>
-        <div class="page">
-            <div class="hover-left"></div>
-            <div class="hover-right"></div>
-            <img src="Image4.jpg" alt="Image 4">
-        </div>
-        <div class="page">
-            <div class="hover-left"></div>
-            <div class="hover-right"></div>
-            <img src="Image5.jpg" alt="Image 5">
-        </div>
+        <!-- Cover Page (single page) -->
+        <div class="page"><img src="Image1.jpg" alt="Cover Page"></div>
+
+        <!-- Double pages (Left and Right) -->
+        <div class="page"><img src="Image2.jpg" alt="Page 2"></div>
+        <div class="page"><img src="Image3.jpg" alt="Page 3"></div>
+        <div class="page"><img src="Image4.jpg" alt="Page 4"></div>
+        <div class="page"><img src="Image5.jpg" alt="Page 5"></div>
+        <div class="page"><img src="Image6.jpg" alt="Page 6"></div>
+        <div class="page"><img src="Image7.jpg" alt="Page 7"></div>
+        <div class="page"><img src="Image8.jpg" alt="Page 8"></div>
+        <div class="page"><img src="Image9.jpg" alt="Page 9"></div>
+        <div class="page"><img src="Image10.jpg" alt="Page 10"></div>
+        <div class="page"><img src="Image11.jpg" alt="Page 11"></div>
+        <div class="page"><img src="Image12.jpg" alt="Page 12"></div>
+        <div class="page"><img src="Image13.jpg" alt="Page 13"></div>
+        <div class="page"><img src="Image14.jpg" alt="Page 14"></div>
+        <div class="page"><img src="Image15.jpg" alt="Page 15"></div>
+        <div class="page"><img src="Image16.jpg" alt="Page 16"></div>
+        <div class="page"><img src="Image17.jpg" alt="Page 17"></div>
+        <div class="page"><img src="Image18.jpg" alt="Page 18"></div>
+        <div class="page"><img src="Image19.jpg" alt="Page 19"></div>
+        <div class="page"><img src="Image20.jpg" alt="Page 20"></div>
+        <div class="page"><img src="Image21.jpg" alt="Page 21"></div>
+        <div class="page"><img src="Image22.jpg" alt="Page 22"></div>
+        <div class="page"><img src="Image23.jpg" alt="Page 23"></div>
+        <div class="page"><img src="Image24.jpg" alt="Page 24"></div>
+        <div class="page"><img src="Image25.jpg" alt="Page 25"></div>
+        <div class="page"><img src="Image26.jpg" alt="Page 26"></div>
+        <div class="page"><img src="Image27.jpg" alt="Page 27"></div>
+        <div class="page"><img src="Image28.jpg" alt="Page 28"></div>
+        <div class="page"><img src="Image29.jpg" alt="Page 29"></div>
+        <div class="page"><img src="Image30.jpg" alt="Page 30"></div>
+        <div class="page"><img src="Image31.jpg" alt="Page 31"></div>
+        <div class="page"><img src="Image32.jpg" alt="Page 32"></div>
+        <div class="page"><img src="Image33.jpg" alt="Page 33"></div>
+        <div class="page"><img src="Image34.jpg" alt="Page 34"></div>
+        <div class="page"><img src="Image35.jpg" alt="Page 35"></div>
     </div>
 
     <script>
@@ -126,14 +104,7 @@
                 }
             });
 
-            // Optional: Add click event to flip pages when clicking on the bottom right or left hover zones
-            $('.hover-left').on('click', function () {
-                $('#flipbook').turn('previous');
-            });
-
-            $('.hover-right').on('click', function () {
-                $('#flipbook').turn('next');
-            });
+            // You can use this to automatically flip pages, or customize the behavior further.
         });
     </script>
 
