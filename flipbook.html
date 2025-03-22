@@ -3,108 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flipbook Example</title>
+    <title>Dynamic Flipbook</title>
 
-    <!-- Load jQuery -->
+    <!-- Include jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-    <!-- Load Turn.js -->
-    <script src="https://raw.githubusercontent.com/blasten/turn.js/refs/heads/master/turn.min.js"></script>
+
+    <!-- Include BookBlock CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock@1.2.1/dist/bookblock.min.css">
 
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 0;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
         }
 
-        #flipbook {
-            width: 600px;
-            height: 400px;
-            background-color: #fff;
+        #book {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .page {
+        #book .bb-bookblock {
+            position: relative;
             width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .bb-item {
+            width: 50%;
             height: 100%;
             background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
-            color: #333;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
         }
 
-        .hard {
-            background-color: #ddd;
+        /* Page Content Styling */
+        .bb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        /* Cover Page */
-        .cover-page {
-            background-image: url('Image1.jpg');
+        .bb-item .cover {
             background-size: cover;
             background-position: center;
-        }
-
-        /* Split Images for Left and Right Pages */
-        .left-page {
-            background-size: 200% 100%;
-            background-position: left center;
-        }
-
-        .right-page {
-            background-size: 200% 100%;
-            background-position: right center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Flipbook Container -->
-    <div id="flipbook">
-        <!-- Cover Page (Non-flippable) -->
-        <div class="hard cover-page"></div>
+    <div id="book">
+        <div class="bb-bookblock">
+            <!-- Cover Page (Non-flippable) -->
+            <div class="bb-item cover" style="background-image: url('Image1.jpg');">
+                <div class="page-content">Cover</div>
+            </div>
 
-        <!-- Blank page (for the back of the cover) -->
-        <div class="hard"></div>
+            <!-- Generate Pages from Image2.jpg to Image35.jpg -->
+            <script>
+                $(document).ready(function() {
+                    var imageCount = 35; // Total number of images (Image1.jpg to Image35.jpg)
+                    var $book = $('#book .bb-bookblock');
 
-        <!-- Dynamic Pages for Image2 to Image35 -->
-        <script>
-            $(document).ready(function() {
-                // Dynamically create pages for Image2.jpg to Image35.jpg
-                var imageCount = 35; // Total number of images (Image1.jpg to Image35.jpg)
+                    for (var i = 2; i <= imageCount; i++) {
+                        // Left Page (for the left half of the image)
+                        var leftPage = $('<div class="bb-item"></div>');
+                        leftPage.css('background-image', 'url("Image' + i + '.jpg")');
+                        leftPage.css('background-size', '200% 100%');
+                        leftPage.css('background-position', 'left center');
+                        $book.append(leftPage);
 
-                for (var i = 2; i <= imageCount; i++) {
-                    // Left Page
-                    var leftPage = $('<div class="left-page"></div>');
-                    leftPage.css('background-image', 'url("Image' + i + '.jpg")');
-                    $('#flipbook').append(leftPage);
+                        // Right Page (for the right half of the image)
+                        var rightPage = $('<div class="bb-item"></div>');
+                        rightPage.css('background-image', 'url("Image' + i + '.jpg")');
+                        rightPage.css('background-size', '200% 100%');
+                        rightPage.css('background-position', 'right center');
+                        $book.append(rightPage);
+                    }
 
-                    // Right Page
-                    var rightPage = $('<div class="right-page"></div>');
-                    rightPage.css('background-image', 'url("Image' + i + '.jpg")');
-                    $('#flipbook').append(rightPage);
-                }
-
-                // Initialize Turn.js on the flipbook element
-                $("#flipbook").turn({
-                    width: 600,        // Width of the flipbook
-                    height: 400,       // Height of the flipbook
-                    autoCenter: true,  // Auto-center the flipbook
-                    display: 'double'  // Display double pages (left and right sides)
+                    // Initialize BookBlock
+                    var bookblock = $('#book').bookblock({
+                        speed: 800,
+                        shadowSides: 0.8,
+                        shadowFlip: 0.7,
+                        onEndFlip: function(old, page, isLimit) {
+                            console.log('Page flipped:', page);
+                        }
+                    });
                 });
-            });
-        </script>
-
-        <!-- Blank page (for the back of the last page) -->
-        <div class="hard"></div>
-
-        <!-- Back cover (Non-flippable) -->
-        <div class="hard">Back Cover</div>
+            </script>
+        </div>
     </div>
+
+    <!-- Include BookBlock JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bookblock@1.2.1/dist/bookblock.min.js"></script>
 
 </body>
 </html>
