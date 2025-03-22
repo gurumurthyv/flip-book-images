@@ -52,6 +52,12 @@
     </div>
 
     <script>
+       $(document).ready(function() {
+            console.log($.fn.turn ? "Turn.js is loaded!" : "Turn.js is NOT loaded.");
+        });
+
+              
+        
         $(document).ready(function() {
             if ($.isFunction($.fn.turn)) {
                 $('#flipbook').turn({
