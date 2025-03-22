@@ -37,20 +37,22 @@
 
     <!-- Flipbook Container -->
     <div id="flipbook">
-        <div class="page"><img src="Image1.jpg"></div>
-        <div class="page"><img src="Image2.jpg"></div>
-        <div class="page"><img src="Image3.jpg"></div>
-        <div class="page"><img src="Image4.jpg"></div>
-        <div class="page"><img src="Image5.jpg"></div>
+        <!-- Add your images here (assuming images are in the same folder as the HTML) -->
+        <div class="page"><img src="Image1.jpg" alt="Image 1"></div>
+        <div class="page"><img src="Image2.jpg" alt="Image 2"></div>
+        <div class="page"><img src="Image3.jpg" alt="Image 3"></div>
+        <div class="page"><img src="Image4.jpg" alt="Image 4"></div>
+        <div class="page"><img src="Image5.jpg" alt="Image 5"></div>
     </div>
 
     <script>
         $(document).ready(function () {
+            // Initialize the flipbook with Turn.js
             $("#flipbook").turn({
                 width: 800,
                 height: 600,
                 autoCenter: true,
-                display: 'double'
+                display: 'double' // Display double pages (for book-style viewing)
             });
         });
     </script>
