@@ -16,8 +16,9 @@
             background-color: #f8f8f8;
         }
         #flipbook {
-            width: 80vw;
-            height: 60vh;
+            width: 800px;
+            height: 600px;
+            display: block; /* Ensures proper rendering */
         }
         .page {
             width: 100%;
@@ -26,7 +27,7 @@
             background-position: center;
         }
         .controls {
-            margin-top: 10px;
+            margin-top: 20px;
         }
         button {
             padding: 8px 16px;
@@ -42,6 +43,8 @@
         <div class="page" style="background-image: url('Image1.jpg');"></div>
         <div class="page" style="background-image: url('Image2.jpg');"></div>
         <div class="page" style="background-image: url('Image3.jpg');"></div>
+        <div class="page" style="background-image: url('Image4.jpg');"></div>
+        <div class="page" style="background-image: url('Image5.jpg');"></div>
         <!-- Add more pages as needed -->
     </div>
 
@@ -53,9 +56,10 @@
     <script>
         $(document).ready(function() {
             $('#flipbook').turn({
-                width: '80vw',
-                height: '60vh',
-                autoCenter: true
+                width: 800,
+                height: 600,
+                autoCenter: true,
+                display: 'double' // Ensures it shows two pages at a time like a real book
             });
 
             $('#prev').click(function() {
