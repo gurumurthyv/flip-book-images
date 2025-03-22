@@ -18,21 +18,64 @@
             align-items: center;
             height: 100vh;
             background-color: #f8f8f8;
+            margin: 0;
             overflow: hidden;
         }
         #flipbook {
-            width: 800px;
+            width: 1000px;
             height: 600px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         .page {
             width: 100%;
             height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease-out;
         }
         .page img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
+
+        /* Hover effect for lifting pages on bottom left or right */
+        .page:hover .hover-left, .page:hover .hover-right {
+            transform: scaleY(1.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Left Hover Zone */
+        .hover-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 50px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Right Hover Zone */
+        .hover-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: 50px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
@@ -40,19 +83,39 @@
     <!-- Flipbook Container -->
     <div id="flipbook">
         <!-- Add your images here (assuming images are in the same folder as the HTML) -->
-        <div class="page"><img src="Image1.jpg" alt="Image 1"></div>
-        <div class="page"><img src="Image2.jpg" alt="Image 2"></div>
-        <div class="page"><img src="Image3.jpg" alt="Image 3"></div>
-        <div class="page"><img src="Image4.jpg" alt="Image 4"></div>
-        <div class="page"><img src="Image5.jpg" alt="Image 5"></div>
+        <div class="page">
+            <div class="hover-left"></div>
+            <div class="hover-right"></div>
+            <img src="Image1.jpg" alt="Image 1">
+        </div>
+        <div class="page">
+            <div class="hover-left"></div>
+            <div class="hover-right"></div>
+            <img src="Image2.jpg" alt="Image 2">
+        </div>
+        <div class="page">
+            <div class="hover-left"></div>
+            <div class="hover-right"></div>
+            <img src="Image3.jpg" alt="Image 3">
+        </div>
+        <div class="page">
+            <div class="hover-left"></div>
+            <div class="hover-right"></div>
+            <img src="Image4.jpg" alt="Image 4">
+        </div>
+        <div class="page">
+            <div class="hover-left"></div>
+            <div class="hover-right"></div>
+            <img src="Image5.jpg" alt="Image 5">
+        </div>
     </div>
 
     <script>
         $(document).ready(function () {
             // Initialize the flipbook with Turn.js
             $("#flipbook").turn({
-                width: 800,
-                height: 600,
+                width: 1000,  // Set the flipbook width
+                height: 600,  // Set the flipbook height
                 autoCenter: true,
                 display: 'double', // Display double pages (for book-style viewing)
                 when: {
@@ -63,18 +126,13 @@
                 }
             });
 
-            // Optional: Add click event to flip pages when clicking on the bottom right corner
-            $('#flipbook').on('click', function (e) {
-                var offset = $(this).offset();
-                var width = $(this).width();
-                var height = $(this).height();
-                
-                // If clicked on the right half of the book, turn right
-                if (e.pageX > offset.left + width / 2) {
-                    $('#flipbook').turn('next');
-                } else {
-                    $('#flipbook').turn('previous');
-                }
+            // Optional: Add click event to flip pages when clicking on the bottom right or left hover zones
+            $('.hover-left').on('click', function () {
+                $('#flipbook').turn('previous');
+            });
+
+            $('.hover-right').on('click', function () {
+                $('#flipbook').turn('next');
             });
         });
     </script>
