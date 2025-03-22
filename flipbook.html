@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lookbook Flipbook</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/turn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f8f8f8;
         }
         #flipbook {
-            width: 800px;
-            height: 600px;
+            width: 80vw;
+            height: 60vh;
         }
         .page {
             width: 100%;
@@ -24,24 +25,48 @@
             background-size: cover;
             background-position: center;
         }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+
     <div id="flipbook">
         <div class="page" style="background-image: url('Image1.jpg');"></div>
         <div class="page" style="background-image: url('Image2.jpg');"></div>
         <div class="page" style="background-image: url('Image3.jpg');"></div>
         <!-- Add more pages as needed -->
     </div>
-    
+
+    <div class="controls">
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+    </div>
+
     <script>
         $(document).ready(function() {
             $('#flipbook').turn({
-                width: 800,
-                height: 600,
+                width: '80vw',
+                height: '60vh',
                 autoCenter: true
+            });
+
+            $('#prev').click(function() {
+                $('#flipbook').turn('previous');
+            });
+
+            $('#next').click(function() {
+                $('#flipbook').turn('next');
             });
         });
     </script>
+
 </body>
 </html>
