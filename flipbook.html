@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lookbook Flipbook</title>
+    <title>Flipbook Example</title>
 
     <!-- Load jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
-    <!-- Load Turn.js from GitHub Raw URL -->
-    <script src="jsfiles/turn.min.js"></script>
+    <!-- Load Turn.js -->
+    <script src="https://raw.githubusercontent.com/blasten/turn.js/refs/heads/master/turn.min.js"></script>
 
     <style>
         body {
@@ -17,17 +17,16 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f8f8;
             margin: 0;
-            overflow: hidden;
+            background-color: #f0f0f0;
         }
+
         #flipbook {
-            width: 1000px;
-            height: 600px;
+            width: 600px;
+            height: 400px;
             background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
+
         .page {
             width: 100%;
             height: 100%;
@@ -35,12 +34,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            font-size: 24px;
+            color: #333;
         }
-        .page img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+
+        .hard {
+            background-color: #ddd;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            background-image: url('Image1.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Split Images for Left and Right Pages */
+        .left-page {
+            background-size: 200% 100%;
+            background-position: left center;
+        }
+
+        .right-page {
+            background-size: 200% 100%;
+            background-position: right center;
         }
     </style>
 </head>
@@ -48,65 +65,46 @@
 
     <!-- Flipbook Container -->
     <div id="flipbook">
-        <!-- Cover Page (single page) -->
-        <div class="page"><img src="Image1.jpg" alt="Cover Page"></div>
+        <!-- Cover Page (Non-flippable) -->
+        <div class="hard cover-page"></div>
 
-        <!-- Double pages (Left and Right) -->
-        <div class="page"><img src="Image2.jpg" alt="Page 2"></div>
-        <div class="page"><img src="Image3.jpg" alt="Page 3"></div>
-        <div class="page"><img src="Image4.jpg" alt="Page 4"></div>
-        <div class="page"><img src="Image5.jpg" alt="Page 5"></div>
-        <div class="page"><img src="Image6.jpg" alt="Page 6"></div>
-        <div class="page"><img src="Image7.jpg" alt="Page 7"></div>
-        <div class="page"><img src="Image8.jpg" alt="Page 8"></div>
-        <div class="page"><img src="Image9.jpg" alt="Page 9"></div>
-        <div class="page"><img src="Image10.jpg" alt="Page 10"></div>
-        <div class="page"><img src="Image11.jpg" alt="Page 11"></div>
-        <div class="page"><img src="Image12.jpg" alt="Page 12"></div>
-        <div class="page"><img src="Image13.jpg" alt="Page 13"></div>
-        <div class="page"><img src="Image14.jpg" alt="Page 14"></div>
-        <div class="page"><img src="Image15.jpg" alt="Page 15"></div>
-        <div class="page"><img src="Image16.jpg" alt="Page 16"></div>
-        <div class="page"><img src="Image17.jpg" alt="Page 17"></div>
-        <div class="page"><img src="Image18.jpg" alt="Page 18"></div>
-        <div class="page"><img src="Image19.jpg" alt="Page 19"></div>
-        <div class="page"><img src="Image20.jpg" alt="Page 20"></div>
-        <div class="page"><img src="Image21.jpg" alt="Page 21"></div>
-        <div class="page"><img src="Image22.jpg" alt="Page 22"></div>
-        <div class="page"><img src="Image23.jpg" alt="Page 23"></div>
-        <div class="page"><img src="Image24.jpg" alt="Page 24"></div>
-        <div class="page"><img src="Image25.jpg" alt="Page 25"></div>
-        <div class="page"><img src="Image26.jpg" alt="Page 26"></div>
-        <div class="page"><img src="Image27.jpg" alt="Page 27"></div>
-        <div class="page"><img src="Image28.jpg" alt="Page 28"></div>
-        <div class="page"><img src="Image29.jpg" alt="Page 29"></div>
-        <div class="page"><img src="Image30.jpg" alt="Page 30"></div>
-        <div class="page"><img src="Image31.jpg" alt="Page 31"></div>
-        <div class="page"><img src="Image32.jpg" alt="Page 32"></div>
-        <div class="page"><img src="Image33.jpg" alt="Page 33"></div>
-        <div class="page"><img src="Image34.jpg" alt="Page 34"></div>
-        <div class="page"><img src="Image35.jpg" alt="Page 35"></div>
-    </div>
+        <!-- Blank page (for the back of the cover) -->
+        <div class="hard"></div>
 
-    <script>
-        $(document).ready(function () {
-            // Initialize the flipbook with Turn.js
-            $("#flipbook").turn({
-                width: 1000,  // Set the flipbook width
-                height: 600,  // Set the flipbook height
-                autoCenter: true,
-                display: 'double', // Display double pages (for book-style viewing)
-                when: {
-                    // Trigger actions when flipping
-                    turned: function(event, page, view) {
-                        console.log('Page ' + page + ' turned');
-                    }
+        <!-- Dynamic Pages for Image2 to Image35 -->
+        <script>
+            $(document).ready(function() {
+                // Dynamically create pages for Image2.jpg to Image35.jpg
+                var imageCount = 35; // Total number of images (Image1.jpg to Image35.jpg)
+
+                for (var i = 2; i <= imageCount; i++) {
+                    // Left Page
+                    var leftPage = $('<div class="left-page"></div>');
+                    leftPage.css('background-image', 'url("Image' + i + '.jpg")');
+                    $('#flipbook').append(leftPage);
+
+                    // Right Page
+                    var rightPage = $('<div class="right-page"></div>');
+                    rightPage.css('background-image', 'url("Image' + i + '.jpg")');
+                    $('#flipbook').append(rightPage);
                 }
-            });
 
-            // You can use this to automatically flip pages, or customize the behavior further.
-        });
-    </script>
+                // Initialize Turn.js on the flipbook element
+                $("#flipbook").turn({
+                    width: 600,        // Width of the flipbook
+                    height: 400,       // Height of the flipbook
+                    autoCenter: true,  // Auto-center the flipbook
+                    display: 'double'  // Display double pages (left and right sides)
+                });
+            });
+        </script>
+
+        <!-- Blank page (for the back of the last page) -->
+        <div class="hard"></div>
+
+        <!-- Back cover (Non-flippable) -->
+        <div class="hard">Back Cover</div>
+    </div>
 
 </body>
 </html>
