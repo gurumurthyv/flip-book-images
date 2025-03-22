@@ -20,10 +20,9 @@
             width: 800px;
             height: 600px;
             position: relative;
-            overflow: hidden;
         }
         .page {
-            width: 400px;
+            width: 400px; /* Half of flipbook width for each page */
             height: 600px;
         }
         .page img {
@@ -38,6 +37,7 @@
 </head>
 <body>
 
+    <!-- Flipbook container -->
     <div id="flipbook">
         <div class="page"><img src="Image1.jpg" alt="Page 1"></div>
         <div class="page"><img src="Image2.jpg" alt="Page 2"></div>
@@ -46,39 +46,21 @@
         <div class="page"><img src="Image5.jpg" alt="Page 5"></div>
     </div>
 
+    <!-- Navigation controls -->
     <div class="controls">
         <button id="prev">Previous</button>
         <button id="next">Next</button>
     </div>
 
     <script>
-       $(document).ready(function() {
-            console.log($.fn.turn ? "Turn.js is loaded!" : "Turn.js is NOT loaded.");
-        });
-
-              
-        
         $(document).ready(function() {
+            // Check if Turn.js is loaded
             if ($.isFunction($.fn.turn)) {
+                // Initialize the flipbook
                 $('#flipbook').turn({
                     width: 800,
                     height: 600,
                     autoCenter: true
                 });
 
-                // Navigation controls
-                $('#next').click(function() {
-                    $('#flipbook').turn('next');
-                });
-
-                $('#prev').click(function() {
-                    $('#flipbook').turn('previous');
-                });
-            } else {
-                console.error("Turn.js is not loading correctly.");
-            }
-        });
-    </script>
-
-</body>
-</html>
+                // Navigation button functionality
