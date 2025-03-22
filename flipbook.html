@@ -7,34 +7,29 @@
 
     <!-- Load jQuery and Turn.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://www.turnjs.com/lib/turn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
 
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f8f8f8;
+            overflow: hidden;
         }
         #flipbook {
-            width: 400px;
-            height: 300px;
-        }
-        .hard {
-            background: gray;
-            color: white;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 300px;
+            width: 800px;
+            height: 600px;
         }
         .page {
-            background: white;
-            text-align: center;
-            font-size: 20px;
-            line-height: 300px;
+            width: 100%;
+            height: 100%;
+        }
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -42,22 +37,20 @@
 
     <!-- Flipbook Container -->
     <div id="flipbook">
-        <div class="hard">Cover</div>
-        <div class="hard"></div>
-        <div class="page">Page 1</div>
-        <div class="page">Page 2</div>
-        <div class="page">Page 3</div>
-        <div class="page">Page 4</div>
-        <div class="hard"></div>
-        <div class="hard">Back Cover</div>
+        <div class="page"><img src="Image1.jpg"></div>
+        <div class="page"><img src="Image2.jpg"></div>
+        <div class="page"><img src="Image3.jpg"></div>
+        <div class="page"><img src="Image4.jpg"></div>
+        <div class="page"><img src="Image5.jpg"></div>
     </div>
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             $("#flipbook").turn({
-                width: 400,
-                height: 300,
-                autoCenter: true
+                width: 800,
+                height: 600,
+                autoCenter: true,
+                display: 'double'
             });
         });
     </script>
