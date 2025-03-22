@@ -8,8 +8,8 @@
     <!-- Include jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <!-- Include BookBlock CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock@1.2.1/dist/bookblock.min.css">
+    <!-- BookBlock Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@paxperscientiam/bookblock@0.2.1/dist/bookblock.min.css">
 
     <style>
         body {
@@ -108,8 +108,22 @@
         </div>
     </div>
 
-    <!-- Include BookBlock JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bookblock@1.2.1/dist/bookblock.min.js"></script>
+    <!-- Import BookBlock JS as a Module -->
+    <script type="module">
+        import paxperscientiambookblock from 'https://cdn.jsdelivr.net/npm/@paxperscientiam/bookblock@0.2.1/+esm';
+
+        // Once the module is loaded, you can initialize it for the flipbook
+        $(document).ready(function() {
+            const bookblock = paxperscientiambookblock('#book', {
+                speed: 800,
+                shadowSides: 0.8,
+                shadowFlip: 0.7,
+                onEndFlip: function(old, page, isLimit) {
+                    console.log('Page flipped:', page);
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
