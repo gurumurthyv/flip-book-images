@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lookbook Flipbook</title>
-
-    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- Turn.js (alternative source) -->
     <script src="https://www.turnjs.com/lib/turn.min.js"></script>
-
     <style>
         body {
             display: flex;
@@ -24,27 +19,30 @@
         #flipbook {
             width: 800px;
             height: 600px;
+            position: relative;
+            overflow: hidden;
         }
         .page {
-            width: 400px; /* Each page is half of the flipbook width */
+            width: 400px; /* Each page should be half of the flipbook width */
             height: 600px;
-            background-size: cover;
-            background-position: center;
+        }
+        .page img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <!-- Flipbook Container -->
     <div id="flipbook">
-        <div class="page" style="background-image: url('Image1.jpg');"></div>
-        <div class="page" style="background-image: url('Image2.jpg');"></div>
-        <div class="page" style="background-image: url('Image3.jpg');"></div>
-        <div class="page" style="background-image: url('Image4.jpg');"></div>
-        <div class="page" style="background-image: url('Image5.jpg');"></div>
+        <div class="page"><img src="Image1.jpg" alt="Page 1"></div>
+        <div class="page"><img src="Image2.jpg" alt="Page 2"></div>
+        <div class="page"><img src="Image3.jpg" alt="Page 3"></div>
+        <div class="page"><img src="Image4.jpg" alt="Page 4"></div>
+        <div class="page"><img src="Image5.jpg" alt="Page 5"></div>
     </div>
 
-    <!-- Navigation Controls -->
     <div class="controls">
         <button id="prev">Previous</button>
         <button id="next">Next</button>
@@ -52,25 +50,23 @@
 
     <script>
         $(document).ready(function() {
-            // Ensure turn.js is available
-            if (typeof $.fn.turn !== "undefined") {
-                $("#flipbook").turn({
+            if ($.isFunction($.fn.turn)) {
+                $('#flipbook').turn({
                     width: 800,
                     height: 600,
                     autoCenter: true,
-                    display: "double"
+                    display: 'double'
                 });
 
-                $("#prev").click(function() {
-                    $("#flipbook").turn("previous");
+                $('#prev').click(function() {
+                    $('#flipbook').turn('previous');
                 });
 
-                $("#next").click(function() {
-                    $("#flipbook").turn("next");
+                $('#next').click(function() {
+                    $('#flipbook').turn('next');
                 });
-
             } else {
-                console.error("Turn.js is not loaded properly.");
+                console.error("turn.js is not loading correctly.");
             }
         });
     </script>
