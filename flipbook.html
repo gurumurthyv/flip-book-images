@@ -127,3 +127,191 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipbook Gallery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        #flipbook {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            perspective: 1500px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .page {
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .page img, .page canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        button {
+            padding: 8px 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="flipbook">
+        <!-- Pages will be dynamically added here -->
+    </div>
+    <div class="controls">
+        <button onclick="$('#flipbook').turn('previous')">Previous</button>
+        <button onclick="$('#flipbook').turn('next')">Next</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const totalImages = 35;
+            const flipbook = $('#flipbook');
+            
+            // Function to split image into two halves
+            function splitImage(img, isLeftHalf) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size to half the image width
+                canvas.width = img.width / 2;
+                canvas.height = img.height;
+                
+                // Draw the appropriate half of the image
+                ctx.drawImage(
+                    img,
+                    isLeftHalf ? 0 : img.width / 2, // Source x
+                    0, // Source y
+                    img.width / 2, // Source width
+                    img.height, // Source height
+                    0, // Destination x
+                    0, // Destination y
+                    img.width / 2, // Destination width
+                    img.height // Destination height
+                );
+                
+                return canvas;
+            }
+            
+            // Function to create pages for an image
+
+            async function createPagesForImage(imageNumber) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = function() {
+                        const leftHalf = splitImage(img, true);
+                        const rightHalf = splitImage(img, false);
+                        
+                        const pages = `
+                            <div class="page">
+                                <canvas width="${img.width/2}" height="${img.height}"></canvas>
+                            </div>
+                            <div class="page">
+                                <canvas width="${img.width/2}" heighst="${img.height}"></canvas>
+                            </div>
+                        `;
+                        
+                        // Get the newly added pages
+                        const pageElements = $(pages);
+                        flipbook.append(pageElements);
+                        
+                        // Draw the halves onto the canvases
+                        const leftCanvas = pageElements[0].querySelector('canvas');
+                        const rightCanvas = pageElements[1].querySelector('canvas');
+                        const leftCtx = leftCanvas.getContext('2d');
+                        const rightCtx = rightCanvas.getContext('2d');
+                        leftCtx.drawImage(leftHalf, 0, 0);
+                        rightCtx.drawImage(rightHalf, 0, 0);
+                        
+                        resolve();
+                    };
+                    img.src = `Image${imageNumber}.jpg`;
+                });
+            }
+            
+            // Add cover page
+            const coverImg = new Image();
+            coverImg.onload = async function() {
+                flipbook.append(`
+                    <div class="page">
+                        <img src="Image1.jpg" alt="Cover">
+                    </div>
+                `);
+                
+                // Add content pages with split images
+                for (let i = 2; i <= totalImages; i++) {
+                    await createPagesForImage(i);
+                }
+                
+                // Initialize turn.js with full viewport dimensions
+                function updateFlipbookSize() {
+                    const width = $(window).width();
+                    const height = $(window).height();
+                    
+                    flipbook.turn({
+                        width: width,
+                        height: height,
+                        autoCenter: true,
+                        gradients: true,
+                        acceleration: true,
+                        elevation: 50,
+                        when: {
+                            turning: function(e, page, view) {
+                                const book = $(this);
+                                if (page >= 1) {
+                                    book.turn('center');
+                                }
+                            }
+                        }
+                    });
+                }
+
+                // Update size on window resize
+                $(window).on('resize', updateFlipbookSize);
+                
+                // Initial setup
+                updateFlipbookSize();
+            };
+            coverImg.src = 'Image1.jpg';
+        });
+    </script>
+</body>
+</html> 
