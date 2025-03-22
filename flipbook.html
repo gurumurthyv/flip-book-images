@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lookbook Flipbook</title>
 
-    <!-- Load jQuery and Turn.js -->
+    <!-- Load jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Load Turn.js from GitHub Raw URL -->
     <script src="jsfiles/turn.min.js"></script>
 
     <style>
@@ -52,7 +54,27 @@
                 width: 800,
                 height: 600,
                 autoCenter: true,
-                display: 'double' // Display double pages (for book-style viewing)
+                display: 'double', // Display double pages (for book-style viewing)
+                when: {
+                    // Trigger actions when flipping
+                    turned: function(event, page, view) {
+                        console.log('Page ' + page + ' turned');
+                    }
+                }
+            });
+
+            // Optional: Add click event to flip pages when clicking on the bottom right corner
+            $('#flipbook').on('click', function (e) {
+                var offset = $(this).offset();
+                var width = $(this).width();
+                var height = $(this).height();
+                
+                // If clicked on the right half of the book, turn right
+                if (e.pageX > offset.left + width / 2) {
+                    $('#flipbook').turn('next');
+                } else {
+                    $('#flipbook').turn('previous');
+                }
             });
         });
     </script>
